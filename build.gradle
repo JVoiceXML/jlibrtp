@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	testImplementation 'junit:junit:4.13.2'
+
+	api 'org.jdom:jdom2:2.0.6'
+}
