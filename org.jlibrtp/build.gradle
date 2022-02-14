@@ -29,6 +29,11 @@ jar {
     baseName 'org.jlibrtp'
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
