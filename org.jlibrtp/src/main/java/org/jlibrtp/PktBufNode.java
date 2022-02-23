@@ -29,9 +29,9 @@ package org.jlibrtp;
  *
  */
 public class PktBufNode {
-	/** The next node (RTP Timestamp), looking from the back -> next means older */
+	/** The next node (RTP Timestamp), looking from the back: next means older */
 	protected PktBufNode nextFrameQueueNode = null;
-	/** The previous node (RTP Timestmap), looking from the back -> prev means newer */
+	/** The previous node (RTP Timestmap), looking from the back: prev means newer */
 	protected PktBufNode prevFrameQueueNode = null;
 	/** The next node within the frame, i.e. higher sequence number, same RTP timestamp */
 	protected PktBufNode nextFrameNode = null;

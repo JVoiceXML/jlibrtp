@@ -702,7 +702,7 @@ public class RTPSession {
      * depends on the codec and profile used by the sender.
      *
      * Valid values:
-     *  >0 - The maximum number of packets (based on RTP Timestamp) that may accumulate
+     *  &gt;0 - The maximum number of packets (based on RTP Timestamp) that may accumulate
      *  0 - All valid packets received in order will be given to the application
      * -1 - All valid packets will be given to the application
      *
@@ -744,9 +744,13 @@ public class RTPSession {
      * i.e. disable all RTP packet buffering in jlibrtp,
      * and disable frame reconstruction
      *
-     * @param rtcpAVPFIntf the in
+     * @param rtcpAVPFIntf the interface
+     * @param maxDelay maximum delay
+     * @param earlyThreshold early threshold
+     * @param regularThreshold regular threshold
      */
-    public int registerAVPFIntf(RTCPAVPFIntf rtcpAVPFIntf, int maxDelay, int earlyThreshold, int regularThreshold ) {
+    public int registerAVPFIntf(RTCPAVPFIntf rtcpAVPFIntf, int maxDelay, int earlyThreshold,
+    		int regularThreshold ) {
         if(this.rtcpSession != null) {
             this.packetBufferBehavior(-1);
             this.frameReconstruction = false;
@@ -775,9 +779,10 @@ public class RTPSession {
 
     /**
      * Enable / disable frame reconstruction in the packet buffers.
-     * This is only relevant if getPacketBufferBehavior > 0;
+     * This is only relevant if getPacketBufferBehavior &gt; 0;
      *
      * Default is true.
+     * @param toggle on or off
      */
     public void frameReconstruction(boolean toggle) {
         this.frameReconstruction = toggle;
@@ -870,7 +875,7 @@ public class RTPSession {
     /**
      * Adds a Picture Loss Indication to the feedback queue
      *
-     * @param ssrcMediaSource
+     * @param ssrcMediaSource SSRC of the media source
      * @return 0 if packet was queued, -1 if no feedback support, 1 if redundant
      */
     public int fbPictureLossIndication(long ssrcMediaSource) {
@@ -890,7 +895,7 @@ public class RTPSession {
     /**
      * Adds a Slice Loss Indication to the feedback queue
      *
-     * @param ssrcMediaSource
+     * @param ssrcMediaSource SSRC of the media source
      * @param sliFirst macroblock (MB) address of the first lost macroblock
      * @param sliNumber number of lost macroblocks
      * @param sliPictureId six least significant bits of the codec-specific identif
@@ -913,7 +918,7 @@ public class RTPSession {
     /**
      * Adds a Reference Picture Selection Indication to the feedback queue
      *
-     * @param ssrcMediaSource
+     * @param ssrcMediaSource SSRC of the media source
      * @param bitPadding number of padded bits at end of bitString
      * @param payloadType RTP payload type for codec
      * @param bitString RPSI information as natively defined by the video codec
@@ -936,7 +941,7 @@ public class RTPSession {
     /**
      * Adds a Picture Loss Indication to the feedback queue
      *
-     * @param ssrcMediaSource
+     * @param ssrcMediaSource SSRC of the media source
      * @param bitString the original application message
      * @return 0 if packet was queued, -1 if no feedback support, 1 if redundant
      */
@@ -960,7 +965,7 @@ public class RTPSession {
      *
      * These are mostly used for NACKs.
      *
-     * @param ssrcMediaSource
+     * @param ssrcMediaSource SSRC of the media source
      * @param FMT the Feedback Message Subtype
      * @param PID RTP sequence numbers of lost packets
      * @param BLP bitmask of following lost packets, shared index with PID

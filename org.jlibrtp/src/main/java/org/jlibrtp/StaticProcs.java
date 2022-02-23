@@ -79,7 +79,7 @@ public class StaticProcs {
     /**
      * Combines four bytes (most significant bit first) into a 32 bit unsigned integer.
      *
-     * @param bytes
+     * @param bytes bytes to convert
      * @param index of most significant byte
      * @return long with the 32 bit unsigned integer
      */

@@ -262,7 +262,7 @@ public class RTCPSession {
      * Cleans the TCP APP (application) packet queues of any packets that are
      * too old, defined as 60 seconds since insertion.
      *
-     * @param ssrc The SSRC of the user who has left, negative value -> general cleanup
+     * @param ssrc The SSRC of the user who has left, negative value: general cleanup
      */
     synchronized protected void cleanAppQueue(long ssrc) {
         if(this.appQueue == null)
@@ -387,7 +387,7 @@ public class RTCPSession {
      * Cleans the feeback queue of any packets that have expired,
      * ie feedback packet that are no longer relevant.
      *
-     * @param ssrc The SSRC of the user who has left, negative value -> general cleanup
+     * @param ssrc The SSRC of the user who has left, negative value: general cleanup
      */
     synchronized protected void cleanFbQueue(long ssrc) {
         if(this.fbQueue == null)

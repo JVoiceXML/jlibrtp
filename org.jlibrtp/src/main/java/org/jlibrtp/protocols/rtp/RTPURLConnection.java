@@ -95,6 +95,10 @@ public class RTPURLConnection extends URLConnection implements RTPAppIntf,
      * Object constructor
      *
      * @param url URL
+     * @throws UnsupportedOperationException
+     * 			if the parameters could not be parsed
+     * @throws URISyntaxException
+     * 			if the provided URL cannot be converted into a valid URI 
      */
     public RTPURLConnection(URL url) throws UnsupportedOperationException,
             URISyntaxException {
