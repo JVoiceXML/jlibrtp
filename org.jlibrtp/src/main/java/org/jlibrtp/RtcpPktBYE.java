@@ -31,11 +31,16 @@ public class RtcpPktBYE extends RtcpPkt {
     private static final Logger LOGGER =
         Logger.getLogger(RtcpPktBYE.class.getName());
 
-    /** SSRCs saying bye, 32xn bits, n<16 */
+    /** SSRCs saying bye, 32xn bits, n&lt;16 */
     protected long[] ssrcArray = null;
     /** Optional reason */
     protected byte[] reason = null;
 
+    /**
+     * Constructs a new object.
+     * @param ssrcs SSRC of participant
+     * @param aReason message
+     */
     protected RtcpPktBYE(long[] ssrcs,byte[] aReason) {
         super.packetType = 203;
         // Fetch all the right stuff from the database
@@ -46,6 +51,11 @@ public class RtcpPktBYE extends RtcpPkt {
         }
     }
 
+    /**
+     * Constructs a new object
+     * @param aRawPkt message
+     * @param start start point in message
+     */
     protected RtcpPktBYE(byte[] aRawPkt, int start) {
         rawPkt = aRawPkt;
         if(!super.parseHeaders(start) || packetType != 203 ) {
@@ -99,6 +109,9 @@ public class RtcpPktBYE extends RtcpPkt {
         super.writeHeaders();
     }
 
+    /**
+     * Dump message.
+     */
     public void debugPrint() {
         LOGGER.finest("RtcpPktBYE.debugPrint() ");
         if(ssrcArray != null) {

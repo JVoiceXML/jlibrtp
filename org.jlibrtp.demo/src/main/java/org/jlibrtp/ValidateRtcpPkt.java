@@ -18,20 +18,21 @@
  */
 package org.jlibrtp;
 
-import java.util.*;
-import java.net.*;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.util.ListIterator;
 
-import org.jlibrtp.CompRtcpPkt;
-import org.jlibrtp.Participant;
-import org.jlibrtp.ParticipantDatabase;
-import org.jlibrtp.RTPSession;
-import org.jlibrtp.RtcpPktBYE;
-import org.jlibrtp.RtcpPktRR;
-import org.jlibrtp.RtcpPktSDES;
-import org.jlibrtp.RtcpPktSR;
-
+/**
+ * Tests of {@link RtcpPkt}.
+ * @author Arne Kepp
+ *
+ */
 public class ValidateRtcpPkt {
 
+	/**
+	 * Main method.
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args) {
 		DatagramSocket rtpSock = null;
 		DatagramSocket rtcpSock = null;

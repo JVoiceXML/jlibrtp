@@ -145,14 +145,28 @@ public class RtpPkt {
     /*********************************************************************************************************
      *                                                Reading stuff
      *********************************************************************************************************/
+    /**
+     * Checks for version 2 etc. Not implemented, yet.
+     * @return 0 always
+     */
     protected int checkPkt() {
         //TODO, check for version 2 etc
         return 0;
     }
+    
+    /**
+     * Retrieves the header length. 
+     * @return the header length
+     */
     protected int getHeaderLength() {
         //TODO include extension
         return 12 + 4*getCsrcCount();
     }
+    
+    /**
+     * Retrieves the payload length.
+     * @return the payload length.
+     */
     protected int getPayloadLength() {
         if (payload != null) return payload.length;
         return 0;
@@ -160,6 +174,11 @@ public class RtpPkt {
     //public int getPaddingLength() {
     //	return lenPadding;
     //}
+    
+    /**
+     * Retrieves the version.
+     * @return the version
+     */
     protected int getVersion() {
         return version;
     }
@@ -173,23 +192,51 @@ public class RtpPkt {
     //public int getHeaderExtension() {
     //TODO
     //}
+    
+    /**
+     * Checks if marked.
+     * @return {@code true} if marked
+     */
     protected boolean isMarked() {
         return (marker != 0);
     }
+    
+    /**
+     * Retrieves the payload type.
+     * @return the payload type
+     */
     protected int getPayloadType() {
         return payloadType;
     }
 
+    /**
+     * Retrieves the sequence number.
+     * @return the sequence number
+     */
     protected int getSeqNumber() {
         return seqNumber;
     }
+    
+    /**
+     * Retrieves the time stamp.
+     * @return the time stamp
+     */
     protected long getTimeStamp() {
         return timeStamp;
     }
+    
+    /**
+     * Retrieves the SSRC.
+     * @return the SSRC
+     */
     protected long getSsrc() {
         return ssrc;
     }
 
+    /**
+     * Retrieves the CSRC count.
+     * @return the CSRC count
+     */
     protected int getCsrcCount() {
         if(csrcArray != null) {
             return csrcArray.length;
@@ -197,12 +244,18 @@ public class RtpPkt {
             return 0;
         }
     }
+    
+    /**
+     * Retrieves the CSRC array.
+     * @return the CSRC array
+     */
     protected long[] getCsrcArray() {
         return csrcArray;
     }
 
     /**
-     *  Encodes the a
+     *  Encodes the a packet.
+     *  @return encoded packet
      */
     protected byte[] encode() {
         if(! rawPktCurrent || rawPkt == null) {
@@ -211,7 +264,9 @@ public class RtpPkt {
         return rawPkt;
     }
 
-    /* For debugging purposes */
+    /**
+     * Dump for For debugging purposes
+     */
     protected void printPkt() {
         LOGGER.finest("V:" + version + " P:" + padding + " EXT:" + extension
                 + " CC:" + getCsrcCount() + " M:"+ marker +" PT:" + payloadType + " SN: "+ seqNumber);
@@ -226,6 +281,11 @@ public class RtpPkt {
     /*********************************************************************************************************
      *                                                Setting stuff
      *********************************************************************************************************/
+    
+    /**
+     * Marks as marked.
+     * @param mark marker on on off
+     */
     protected void setMarked(boolean mark) {
         rawPktCurrent = false;
         if(mark) {
@@ -237,6 +297,12 @@ public class RtpPkt {
     //public int setHeaderExtension() {
     //TODO
     //}
+    
+    /**
+     * Sets the payload type.
+     * @param plType the payload type
+     * @return {@code 0} if valid type was set
+     */
     protected int setPayloadType(int plType) {
         int temp = (plType & 0x0000007F); // 7 bits, checks in RTPSession as well.
         if(temp == plType) {
@@ -248,6 +314,11 @@ public class RtpPkt {
         }
     }
 
+    /**
+     * Sets the sequence number.
+     * @param number the sequence number
+     * @return {@code 0} if a valid number was set
+     */
     protected int setSeqNumber(int number) {
         if(number <= 65536 && number >= 0) {
             rawPktCurrent = false;
@@ -259,18 +330,33 @@ public class RtpPkt {
         }
     }
 
+    /**
+     * Sets the timestamp.
+     * @param time the timestamp
+     * @return 0
+     */
     protected int setTimeStamp(long time) {
         rawPktCurrent = false;
         timeStamp = time;
         return 0;	//Naive for now
     }
 
+    /**
+     * Sets the SSRC.
+     * @param source the SSRC
+     * @return 0
+     */
     protected int setSsrc(long source) {
         rawPktCurrent = false;
         ssrc = source;
         return 0;	//Naive for now
     }
 
+    /**
+     * Sets the CSRC.
+     * @param contributors the CSRC.
+     * @return 0 if valid
+     */
     protected int setCsrcs(long[] contributors) {
         if(contributors.length <= 16) {
             csrcArray = contributors;
@@ -281,6 +367,11 @@ public class RtpPkt {
         }
     }
 
+    /**
+     * Sets the payload.
+     * @param data the payload
+     * @return 0 if valid
+     */
     protected int setPayload(byte[] data) {
         // TODO Padding
         if(data.length < (1500 - 12)) {
@@ -292,6 +383,11 @@ public class RtpPkt {
             return -1;
         }
     }
+    
+    /**
+     * Retrieves the payload.
+     * @return the payload
+     */
     protected byte[] getPayload() {
         return payload;
     }
@@ -299,7 +395,9 @@ public class RtpPkt {
     /*********************************************************************************************************
      *                                           Private functions
      *********************************************************************************************************/
-    //Generate a bytebyffer representing the packet, store it.
+    /**
+     * Generate a bytebyffer representing the packet, store it.
+     */
     private void writePkt() {
         int bytes = getPayloadLength();
         int headerLen = getHeaderLength();
@@ -328,7 +426,10 @@ public class RtpPkt {
         System.arraycopy(payload, 0, rawPkt, headerLen, bytes);
         rawPktCurrent = true;
     }
-    //Writes the first 4 octets of the RTP packet
+    
+    /**
+     * Writes the first 4 octets of the RTP packet
+     */
     private void writeFirstLine() {
         byte aByte = 0;
         aByte |=(version << 6);
@@ -344,7 +445,10 @@ public class RtpPkt {
         rawPkt[2] = someBytes[0];
         rawPkt[3] = someBytes[1];
     }
-    //Picks apart the first 4 octets of an RTP packet
+    
+    /**
+     * Picks apart the first 4 octets of an RTP packet
+     */
     private void sliceFirstLine() {
         version = ((rawPkt[0] & 0xC0) >>> 6);
         padding = ((rawPkt[0] & 0x20) >>> 5);
@@ -354,21 +458,34 @@ public class RtpPkt {
         payloadType = (rawPkt[1] & 0x7F);
         seqNumber = StaticProcs.bytesToUIntInt(rawPkt, 2);
     }
-    //Takes the 4 octets representing the timestamp
+    
+    /**
+     * Takes the 4 octets representing the timestamp
+     */
     private void sliceTimeStamp() {
         timeStamp = StaticProcs.bytesToUIntLong(rawPkt, 4);
     }
-    //Takes the 4 octets representing the SSRC
+    
+    /**
+     * Takes the 4 octets representing the SSRC.
+     */
     private void sliceSSRC() {
         ssrc = StaticProcs.bytesToUIntLong(rawPkt,8);
     }
-    //Check the length of the csrcArray (set during sliceFirstLine)
+    
+    /**
+     * Check the length of the csrcArray (set during sliceFirstLine).
+     */
     private void  sliceCSRCs() {
         for(int i=0; i< csrcArray.length; i++) {
             csrcArray[i] = StaticProcs.bytesToUIntLong(rawPkt, i*4 + 12);
         }
     }
-    //Extensions //TODO
+    
+    /**
+     * Extensions //TODO
+     * @param bytes payload
+     */
     private void slicePayload(int bytes) {
         payload = new byte[bytes];
         int headerLen = getHeaderLength();

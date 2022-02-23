@@ -51,18 +51,22 @@ public class SoundSenderDemo implements RTPAppIntf  {
     private static final Logger LOGGER =
         Logger.getLogger(SoundSenderDemo.class.getName());
 
-    public RTPSession rtpSession = null;
+    private RTPSession rtpSession = null;
     static int pktCount = 0;
     static int dataCount = 0;
     private String filename;
     private final int EXTERNAL_BUFFER_SIZE = 1024;
-    SourceDataLine auline;
+    private SourceDataLine auline;
     private Position curPosition;
     boolean local;
     enum Position {
         LEFT, RIGHT, NORMAL
     };
 
+    /**
+     * Constructs a new object.
+     * @param isLocal {@code true} for local tests
+     */
     public SoundSenderDemo(boolean isLocal)  {
         DatagramSocket rtpSocket = null;
         DatagramSocket rtcpSocket = null;
@@ -82,7 +86,8 @@ public class SoundSenderDemo implements RTPAppIntf  {
     }
 
     /**
-     * @param args
+     * Main method.
+     * @param args command line parameters
      */
     public static void main(String[] args) {
         for(int i=0;i<args.length;i++) {
@@ -117,6 +122,9 @@ public class SoundSenderDemo implements RTPAppIntf  {
         return 1;
     }
 
+    /**
+     * Working method
+     */
     public void run() {
         if(LOGGER.isLoggable(Level.FINER)) {
             LOGGER.finer("-> Run()");

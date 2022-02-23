@@ -74,8 +74,8 @@ public interface RTCPAVPFIntf {
 	 * This function is called when a
 	 * Transport Layer Feedback Messages is received
 	 *
-	 * @param ssrcPacketSender
-	 * @param alfBitString
+	 * @param ssrcPacketSender SSRC of the packet sender
+	 * @param alfBitString message
 	 */
 	public void PSFBPktAppLayerFBReceived(
 			long ssrcPacketSender,
@@ -85,7 +85,7 @@ public interface RTCPAVPFIntf {
 	 * This function is called when a
 	 * Transport Layer Feedback Messages is received
 	 *
-	 * @param ssrcPacketSender
+	 * @param ssrcPacketSender SSRC of packet sender
 	 * @param FMT 1: NACK, 0,2-30: unassigned, 31: reserved
 	 * @param packetID the RTP sequence number of the lost packet
 	 * @param bitmaskLostPackets the bitmask of following lost packets

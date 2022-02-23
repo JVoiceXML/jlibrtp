@@ -177,11 +177,14 @@ public class RTPSession {
      * @param	rtpSock a multicast socket to receive RTP communication on
      * @param	rtcpSock a multicast socket to receive RTP communication on
      * @param	multicastGroup the multicast group that we want to communicate with.
+     * @throws Exception error creating a session
      */
-    public RTPSession(MulticastSocket rtpSock, MulticastSocket rtcpSock, InetAddress multicastGroup) throws Exception {
+    @SuppressWarnings("deprecation")
+	public RTPSession(MulticastSocket rtpSock, MulticastSocket rtcpSock, InetAddress multicastGroup) throws Exception {
         mcSession = true;
         rtpMCSock =rtpSock;
         mcGroup = multicastGroup;
+        // TODO replace deprecated method call
         rtpMCSock.joinGroup(mcGroup);
         rtcpSock.joinGroup(mcGroup);
         this.generateCNAME();
@@ -200,6 +203,7 @@ public class RTPSession {
      *
      * @param	rtpApp an object that implements the RTPAppIntf-interface
      * @param	rtcpApp an object that implements the RTCPAppIntf-interface (optional)
+     * @param debugApp debugging interface
      * @return	-1 if this RTPSession-instance already has an application registered.
      */
     public int registerRTPSession(RTPAppIntf rtpApp, RTCPAppIntf rtcpApp, DebugAppIntf debugApp) {
@@ -451,6 +455,7 @@ public class RTPSession {
      * If packets have already been received from this user, we will try to update the automatically inserted participant with the information provided here.
      *
      * @param p A participant.
+     * @return 0 if OK
      */
     public int addParticipant(Participant p) {
         //For now we make all participants added this way persistent
@@ -536,16 +541,24 @@ public class RTPSession {
     }
 
     /**
-     * Get the current CNAME, used for outgoing SDES packets
+     * Get the current CNAME, used for outgoing SDES packets.
+     * @return the CNAME
      */
     public String CNAME() {
         return this.cname;
     }
 
+    /**
+     * Retrieves the SSRC.
+     * @return the SSRC
+     */
     public long getSsrc() {
         return this.ssrc;
     }
 
+    /**
+     * Generates a CNAME.
+     */
     private void generateCNAME() {
         String hostname;
 
@@ -568,6 +581,7 @@ public class RTPSession {
      * Only valid if this is a unicast session to begin with.
      *
      * @param newSock integer for new port number, check it is free first.
+     * @return 0 if OK
      */
     public int updateRTPSock(DatagramSocket newSock) {
         if(!mcSession) {
@@ -585,6 +599,7 @@ public class RTPSession {
      * Only valid if this is a unicast session to begin with.
      *
      * @param newSock the new unicast socket for RTP communication.
+     * @return 0 if OK
      */
     public int updateRTCPSock(DatagramSocket newSock) {
         if(!mcSession) {
@@ -602,6 +617,7 @@ public class RTPSession {
      * Only valid if this is a multicast session to begin with.
      *
      * @param newSock the new multicast socket for RTP communication.
+     * @return 0 if OK
      */
     public int updateRTPSock(MulticastSocket newSock) {
         if(mcSession) {
@@ -619,6 +635,7 @@ public class RTPSession {
      * Only valid if this is a multicast session to begin with.
      *
      * @param newSock the new multicast socket for RTCP communication.
+     * @return 0 if OK
      */
     public int updateRTCPSock(MulticastSocket newSock) {
         if(mcSession) {
@@ -634,6 +651,7 @@ public class RTPSession {
      * Update the payload type used for the session. It is represented as a 7 bit integer, whose meaning must be negotiated elsewhere (see IETF RFCs <a href="http://www.ietf.org/rfc/rfc3550.txt">3550</a> and <a href="http://www.ietf.org/rfc/rfc3551.txt">3551</a>)
      *
      * @param payloadT an integer representing the payload type of any subsequent packets that are sent.
+     * @return 0 if OK
      */
     public int payloadType(int payloadT) {
         if(payloadT > 128 || payloadT < 0) {

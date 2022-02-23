@@ -44,13 +44,19 @@ public class UnicastExample2 implements RTPAppIntf {
 	RTPSession rtpSession = null;
 
 
-	/** A minimal constructor */
+	/**
+	 * A minimal constructor.
+	 * @param rtpSession the RTP session
+	 */
 	public UnicastExample2(RTPSession rtpSession) {
 		this.rtpSession = rtpSession;
 	}
 
 	// RTPAppIntf  All of the following are documented in the JavaDocs
-	/** Used to receive data from the RTP Library. We expect no data */
+	/** 
+	 * Used to receive data from the RTP Library. We expect no data.
+	 * {@inheritDoc}
+	 */
 	public void receiveData(DataFrame frame, Participant p) {
 		/**
 		 * This concatenates all received packets for a single timestamp
@@ -71,18 +77,28 @@ public class UnicastExample2 implements RTPAppIntf {
 		//}
 	}
 
-	/** Used to communicate updates to the user database through RTCP */
+	/**
+	 * Used to communicate updates to the user database through RTCP.
+	 * {@inheritDoc}
+	 */
 	public void userEvent(int type, Participant[] participant) {
 		//Do nothing
 	}
 
-	/** How many packets make up a complete frame for the payload type? */
+	/**
+	 * How many packets make up a complete frame for the payload type?
+	 * {@inheritDoc}
+	 */
 	public int frameSize(int payloadType) {
 		return 1;
 	}
 	// RTPAppIntf/
 
 
+	/**
+	 * Main method.
+	 * @param args command line parameters
+	 */
 	public static void main(String[] args) {
 		// 1. Create sockets for the RTPSession
 		DatagramSocket rtpSocket = null;

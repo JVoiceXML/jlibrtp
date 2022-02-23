@@ -41,23 +41,26 @@ import org.jlibrtp.StaticProcs;
  */
 
 public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf {
-		// For the session
-		RTPSession rtpSession = null;
-		// The number of packets we have received
-		int packetCount = 0;
-		int maxPacketCount = -1;
-		boolean noBye = true;
+		/** For the session. */
+		private RTPSession rtpSession = null;
+		/** The number of packets we have received. */
+		private int packetCount = 0;
+		private int maxPacketCount = -1;
+		private boolean noBye = true;
 
 		// Debug
-		int dataCount = 0;
-		int pktCount = 0;
+		private int dataCount = 0;
+		private int pktCount = 0;
 
 		// For the document
-		Document sessionDocument = null;
-		Element sessionElement = null;
+		private Document sessionDocument = null;
+		private Element sessionElement = null;
 
 		/**
-		 * Constructor
+		 * Constructs a new object.
+		 * @param rtpPortNum RTP port number
+		 * @param rtcpPortNum RTCP port number
+		 * @param maxPacketCount max packet count
 		 */
 		public XmlPacketRecorder(int rtpPortNum, int rtcpPortNum, int maxPacketCount) {
 			DatagramSocket rtpSocket = null;
@@ -81,19 +84,28 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.rtpSession.naivePktReception(true);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void packetReceived(int type, InetSocketAddress socket, String description) {
 			System.out.println("***** " + description);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void packetSent(int type, InetSocketAddress socket, String description) {
 			System.out.println("***** " + description);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void importantEvent(int type, String description) {
 
 		}
 		/**
-		 * RTCP
+		 * {@inheritDoc}
 		 */
 		public void SRPktReceived(long ssrc, long ntpHighOrder, long ntpLowOrder,
 				long rtpTimestamp, long packetCount, long octetCount,
@@ -135,6 +147,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.packetCount++;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void RRPktReceived(long reporterSsrc, long[] reporteeSsrc,
 				int[] lossFraction, int[] cumulPacketsLost, long[] extHighSeq,
 				long[] interArrivalJitter, long[] lastSRTimeStamp, long[] delayLastSR) {
@@ -143,6 +158,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.packetCount++;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void SDESPktReceived(Participant[] relevantParticipants) {
 			Element SDESPkt = new Element("SDESPkt");
 			this.sessionElement.addContent(SDESPkt);
@@ -207,6 +225,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.packetCount++;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void BYEPktReceived(Participant[] relevantParticipants, String reason) {
 			Element BYEPkt = new Element("BYEPkt");
 			this.sessionElement.addContent(BYEPkt);
@@ -239,6 +260,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.maxPacketCount = this.packetCount;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void APPPktReceived(Participant part, int subtype, byte[] name, byte[] data) {
 			Element APPPkt = new Element("APPPkt");
 			this.sessionElement.addContent(APPPkt);
@@ -274,7 +298,7 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 		}
 
 		/**
-		 * RTP
+		 * {@inheritDoc}
 		 */
 		public void receiveData(DataFrame frame, Participant part) {
 			//System.out.println(" RECEIVING RECEIVING ");
@@ -347,6 +371,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			this.packetCount++;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void userEvent(int type, Participant[] participant) {
 			if(type == 1) {
 				this.noBye = false;
@@ -355,6 +382,9 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 			}
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public int frameSize(int payloadType) {
 			return 1;
 		}
@@ -386,6 +416,10 @@ public class XmlPacketRecorder implements RTPAppIntf, RTCPAppIntf, DebugAppIntf 
 	        sessionInformation.addContent(sessionStart);
 	    }
 
+	    /**
+	     * Main method.
+	     * @param args command line arguments
+	     */
 		public static void main(String[] args) {
 			int rtpPortNum = -1;
 			int rtcpPortNum = -1;

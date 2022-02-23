@@ -69,6 +69,9 @@ public class DataFrame {
     /**
      * The usual way to construct a frame is by giving it a PktBufNode,
      * which contains links to all the other pkts that make it up.
+     * @param aBufNode node
+     * @param p the participant
+     * @param noPkts number of packets
      */
     protected DataFrame(PktBufNode aBufNode, Participant p, int noPkts) {
         if(LOGGER.isLoggable(Level.FINE)) {

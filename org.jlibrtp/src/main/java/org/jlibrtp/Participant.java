@@ -151,7 +151,12 @@ public class Participant {
         //isSender = true;
     }
 
-    // We got a packet, but we don't know this person yet.
+    /**
+     * We got a packet, but we don't know this person yet.
+     * @param rtpAdr RTP received from address
+     * @param rtcpAdr RTCP received from address
+     * @param SSRC SSRC of participant
+     */
     protected Participant(InetSocketAddress rtpAdr, InetSocketAddress rtcpAdr, long SSRC) {
         rtpReceivedFromAddress = rtpAdr;
         rtcpReceivedFromAddress = rtcpAdr;
@@ -159,7 +164,9 @@ public class Participant {
         unexpected = true;
     }
 
-    // Dummy constructor to ease testing
+    /**
+     * Dummy constructor to ease testing
+     */
     protected Participant() {
         LOGGER.warning("Don't use the Participan(void) Constructor!");
     }

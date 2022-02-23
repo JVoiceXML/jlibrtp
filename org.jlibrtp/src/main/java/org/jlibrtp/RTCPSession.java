@@ -213,7 +213,7 @@ public class RTCPSession {
      * Adds an RTCP APP (application) packet to the queue
      *
      * @param targetSsrc the SSRC of the recipient
-     * @param aPkt
+     * @param aPkt the packet
      */
     synchronized protected void addToAppQueue(long targetSsrc, RtcpPktAPP aPkt) {
         aPkt.time = System.currentTimeMillis();
@@ -294,7 +294,8 @@ public class RTCPSession {
      * Check the feedback queue for similar packets and adds
      * the new packet if it is not redundant
      *
-     * @param aPkt
+     * @param targetSsrc the target SSRC
+     * @param aPkt the packet
      * @return 0 if the packet was added, 1 if it was dropped
      */
     synchronized protected int addToFbQueue(long targetSsrc, RtcpPkt aPkt) {

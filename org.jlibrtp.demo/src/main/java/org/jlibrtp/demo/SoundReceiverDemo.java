@@ -78,6 +78,11 @@ public class SoundReceiverDemo implements RTPAppIntf {
 		return 1;
 	}
 
+	/**
+	 * Constructs a new object.
+	 * @param rtpPort the RTP port
+	 * @param rtcpPort the RTCP port
+	 */
 	public SoundReceiverDemo(int rtpPort, int rtcpPort)  {
 		DatagramSocket rtpSocket = null;
 		DatagramSocket rtcpSocket = null;
@@ -99,7 +104,8 @@ public class SoundReceiverDemo implements RTPAppIntf {
 	}
 
 	/**
-	 * @param args
+	 * Main method,
+	 * @param args command line argument
 	 */
 	public static void main(String[] args) {
 		System.out.println("Setup");
@@ -124,6 +130,9 @@ public class SoundReceiverDemo implements RTPAppIntf {
 		System.out.println("Done");
 	}
 
+	/**
+	 * Demo working method.
+	 */
 	public void doStuff() {
 		System.out.println("-> ReceiverDemo.doStuff()");
 		AudioFormat.Encoding encoding =  new AudioFormat.Encoding("PCM_SIGNED");

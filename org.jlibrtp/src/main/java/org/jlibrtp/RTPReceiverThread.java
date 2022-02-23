@@ -42,6 +42,10 @@ public class RTPReceiverThread extends Thread {
     /** Parent RTP Session */
     private RTPSession rtpSession = null;
 
+    /**
+     * Constructs a new object.
+     * @param session the session
+     */
     public RTPReceiverThread(RTPSession session) {
         rtpSession = session;
         if(LOGGER.isLoggable(Level.FINEST)) {
@@ -50,6 +54,9 @@ public class RTPReceiverThread extends Thread {
         setName("RTPReceiverThread");
     }
 
+    /**
+     * Working method.
+     */
     public void run() {
         if(LOGGER.isLoggable(Level.FINEST)) {
             if(rtpSession.mcSession) {
@@ -171,8 +178,6 @@ public class RTPReceiverThread extends Thread {
             try { rtpSession.pktBufDataReady.signalAll(); } finally {
                 rtpSession.pktBufLock.unlock();
             }
-
         }
     }
-
 }

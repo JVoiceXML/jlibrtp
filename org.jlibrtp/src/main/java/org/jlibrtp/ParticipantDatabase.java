@@ -242,6 +242,9 @@ public class ParticipantDatabase {
         return this.ssrcTable.elements();
     }
 
+    /**
+     * Debug dump.
+     */
     protected void debugPrint() {
         LOGGER.finest("   ParticipantDatabase.debugPrint()");
         Participant p;

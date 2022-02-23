@@ -63,11 +63,9 @@ public class RtcpPktRR extends RtcpPkt {
 
 
     /**
-     *
-     *
-     * If rcount < 0 we assume we have to parse the entire packet,
+     * If rcount &lt; 0 we assume we have to parse the entire packet,
      * otherwise we'll just parse the receiver report blocks
-     * (ie. the data came from a Sender Report packet)
+     * (i.e. the data came from a Sender Report packet)
      *
      * @param aRawPkt the byte[] with the report(s)
      * @param start where in the raw packet to start reading

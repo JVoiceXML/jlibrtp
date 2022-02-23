@@ -18,9 +18,6 @@
  */
 package org.jlibrtp;
 
-import org.jlibrtp.StaticProcs;
-
-
 /**
  * Validates the StaticProcs.
  *
@@ -30,7 +27,8 @@ import org.jlibrtp.StaticProcs;
 public class ValidateStaticProcs {
 
 	/**
-	 * @param args
+	 * Main method.
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

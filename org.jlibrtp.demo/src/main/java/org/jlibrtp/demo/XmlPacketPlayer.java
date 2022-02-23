@@ -33,16 +33,24 @@ import org.jlibrtp.RTPAppIntf;
 import org.jlibrtp.RTPSession;
 import org.jlibrtp.StaticProcs;
 
+/**
+ * XML Packet player demo.
+ * @author Arne Kepp
+ *
+ */
 public class XmlPacketPlayer implements RTPAppIntf {
-	RTPSession rtpSession = null;
-	Document document = null;
-	long origStartTime = -1;
-	long startTime = -1;
-	int dataCount = 0;
-	int pktCount = 0;
+	private RTPSession rtpSession = null;
+	private Document document = null;
+	private long origStartTime = -1;
+	private long startTime = -1;
+	private int dataCount = 0;
+	private int pktCount = 0;
 
 	/**
-	 * Constructor
+	 * Constructs a new object.
+	 * @param rtpPortNum RTP port number
+	 * @param rtcpPortNum RTCP port number
+	 * @param address address to use
 	 */
 	public XmlPacketPlayer(int rtpPortNum, int rtcpPortNum, String address) {
 		DatagramSocket rtpSocket = null;
@@ -63,6 +71,10 @@ public class XmlPacketPlayer implements RTPAppIntf {
 		System.out.println("Done creating player.");
 	}
 
+	/**
+	 * Parses the file with the given name.
+	 * @param filename file to parse
+	 */
 	public void parseDocument(String filename) {
 		System.out.println("Parsing document " + filename);
 		try {
@@ -97,6 +109,10 @@ public class XmlPacketPlayer implements RTPAppIntf {
 
 	}
 
+	/**
+	 * Parses the session info from the element.
+	 * @param elm the element to pars
+	 */
 	public void parseSessionInfo(Element elm) {
 		System.out.println("Parsing Session Information");
 
@@ -118,6 +134,10 @@ public class XmlPacketPlayer implements RTPAppIntf {
 		this.startTime = System.currentTimeMillis();
 	}
 
+	/**
+	 * Parses the RTP packet from the provided element.
+	 * @param elm the element to parse
+	 */
 	public void parseRTPpacket(Element elm) {
 		//System.out.println("Parsing RTP packet");
 
@@ -201,14 +221,20 @@ public class XmlPacketPlayer implements RTPAppIntf {
 	}
 
 	/**
-	 * Dummy methods for the RTPAppinterface
+	 * {@inheritDoc}
 	 */
 	public void receiveData(DataFrame frame, Participant participant) {
 		//dummy;
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public void userEvent(int type, Participant[] participant) {
 		//dummy
 	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public int frameSize(int payloadType) {
 		//dummy
 		return 1;
@@ -216,7 +242,8 @@ public class XmlPacketPlayer implements RTPAppIntf {
 
 
 	/**
-	 * @param args
+	 * Main method.
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
 		int rtpPortNum = -1;

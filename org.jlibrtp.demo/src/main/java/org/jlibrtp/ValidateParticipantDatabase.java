@@ -21,14 +21,16 @@ package org.jlibrtp;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import org.jlibrtp.Participant;
-import org.jlibrtp.ParticipantDatabase;
-import org.jlibrtp.RTPSession;
-
+/**
+ * Tests for the {@link ParticipantDatabase}
+ * @author Arne Kepp
+ *
+ */
 public class ValidateParticipantDatabase {
 
 	/**
-	 * @param args
+	 * Main method.
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
 		DatagramSocket rtpSocket = null;

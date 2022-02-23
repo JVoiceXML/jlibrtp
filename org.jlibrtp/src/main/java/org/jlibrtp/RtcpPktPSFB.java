@@ -57,10 +57,10 @@ public class RtcpPktPSFB extends RtcpPkt {
     protected byte[] alfBitString;
 
     /**
-     * Generic constructor, then call make<something>
+     * Generic constructor, then call {@code make<something>}
      *
-     * @param ssrcPacketSender
-     * @param ssrcMediaSource
+     * @param ssrcPacketSender SSRC of packet sender
+     * @param ssrcMediaSource SSRC of media source
      */
     protected RtcpPktPSFB(long ssrcPacketSender, long ssrcMediaSource) {
         super.ssrc = ssrcPacketSender;
